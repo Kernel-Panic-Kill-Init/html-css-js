@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Survey Form</title>
+  </head>
+  <body>
+    <h1 id="title">Preferences regarding junior developers</h1>
+<p id="description">In this survey I'd like to know what are your preferences regarding junior developers ¯\_(ツ)_/¯.</p>
+<form id="survey-form">
+  <label id="name-label">Enter your name:</label>
+<input required id="name" type="text" placeholder="Enter your name"/> 
+<br>
+<label id="email-label">Enter your email:</label>
+<input required id="email" type="email" placeholder="Enter your email"/>
+<br>
+<label id="number-label">Are you looking for junior developer?</label>
+<input required id="number" type="number" min="0" max="1" placeholder="0 - No; 1- Yes"/>
+<br>
+<p>Which part of developement are you interested in?</p>
+<select id="dropdown">
+  <option value="Frontend">Frontend</option>
+  <option value="Backend">Backend</option>
+  <option value="FullStack">FullStack</option>
+</select>
+<br>
+<br>
+<p>Have you considered the issue of cybersecurity?</p>
+<input id="cybersecurity-yes" type="radio" name="cybersecurity" value="yes"/>
+<label for="cybersecurity">Yes</label>
+<input id="cybersecurity-no" type="radio" name="cybersecurity" value="no"/>
+<label for="cybersecurity">No</label>
+<br>
+<p>Would you like to find out more?</p>
+<input id="ask-yes" type="radio" name="question" value="yes">
+<label for="">Yes</label>
+<input id="ask-no" type="radio" name="question" value="no">
+<label for="">No</label>
+<br>
+<p>Do you want to apply cybersecurity subject to the subject of our meet?</p>
+<input type="checkbox" name="check" value="Yes">
+<label for="check">I'd like to</label>
+<input type="checkbox" name="check" value="No">
+<label for="check">Not necessary</label>
+<br>
+<br>
+<textarea rows="0" cols="65">If you have any other questions feel free to ask them down below:</textarea>
+<input type="text" size="50" placeholder="Feel free to ask me anything ¯\_(ツ)_/¯" >
+<button id="submit" type="submit">Send</button>
+</form>
+  </body>
+</html>
