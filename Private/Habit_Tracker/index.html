@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css"> <!-- Link to external CSS file for styling ---> 
+    <script src="script.js" defer></script> <!-- Added defer attribute to ensure script loads after HTML --->
+    <title>Habit Tracker</title>
+</head>
+<body>
+    <header>
+    <h1>Habit Tracker</h1>
+    </header>
+    <nav>
+        <a href="#overview">Overview</a>
+        <a href="#habits">Add Habits</a>
+        <a href="#stats">Stats</a>
+    </nav>
+    <main>
+        <!-- Overview Section -->
+        <section id="overview">
+            <h2>Overview</h2>
+            <p>Here's your progress overview. Let's take a look how you're doing and how good is your consistency.</p>
+            <br>
+            <a href="#daily">Daily</a>
+            <a href="#weekly">Weekly</a>
+        
+        </section>
+
+        <!-- Habits Section -->
+        <section id="habits">
+            <h2>Habits</h2>
+            <p>Here you can add new habits. Try not to overload yourself with too many habits at once.</p>
+            <a href="daily" id="daily">Daily</a>
+            <a href="#weekly" id="">Weekly</a>
+            <a href="#monthly" id="monthly">Monthly</a>
+            <a href="#priority" id="priority">Priority</a>
+            <br>
+        <input type="text" id="habit-input">
+        <button id="add-habit">Add Habit</button>
+        <ul id="habit-list">
+        </ul>
+        </section>
+        <!-- Stats Section -->
+        <section id="stats">
+            <h2>Statistics</h2>
+            <p>Here's the juicy spot. This is the place where you can take a look at your statistics, make assumptions about your progress, and see how consistent you've been.</p>
+            <a href="#longest-streak" id="longest-streak">Longest Streak</a><br>
+            <a href="completion" id="completion">Completion per habit</a><br>
+            <a href="yearly" id="yearly">Yearly Summary</a><br>
+        </section>
+    </main>
+</body>
+</html>
