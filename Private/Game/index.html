@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+
+    <title>Button Clicker Game</title>
+</head>
+<body>
+    <header class="game-header">
+        <nav class="navbar" role="navigation" aria-label="Game stats">
+            <div class="stats">
+                <span id="score">Score: 0</span>
+                <span id="level">Level: 1</span>
+                <span id="time">Time: 00:00</span>
+                <span id="player">Player: Guest</span>
+            </div>
+        </nav>
+    </header>
+    <main class="playground-section" role="main">
+        <section class="game-area" aria-label="Game - click the movable button">
+            <div id="target" class="target-button" role="button" tabindex="0" aria-label="Click to score points!">CLICK!</div>
+        </section>
+    </main>
+    <footer class="game-footer">
+        <p>&copy; Filip Łuka. 2026 Button Clicker Game. All rights reserved.</p>
+    </footer>
+        <script src="script.js" defer></script>
+</body>
+</html>
