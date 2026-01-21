@@ -3,28 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="author" content="Filip Łuka">
+    <meta name="description" content="A simple button clicker game where players click a moving button to score points.">
+    <meta name="keywords" content="button clicker game, web game, JavaScript game, HTML5 game, interactive game">
     <link rel="stylesheet" href="style.css">
 
     <title>Button Clicker Game</title>
 </head>
 <body>
+    <!-- Game elements -->
     <header class="game-header">
         <nav class="navbar" role="navigation" aria-label="Game stats">
+            <!-- Game stats -->
             <div class="stats">
-                <span id="score">Score: 0</span>
-                <span id="level">Level: 1</span>
-                <span id="time">Time: 00:00</span>
-                <span id="player">Player: Guest</span>
+                <span id="score"><b>Score:</b> 0</span>
+                <span id="level"><b>Level:</b> 1</span>
+                <span id="time"><b>Time:</b> 00:00</span>
+                <span id="player"><b>Player:</b> Guest</span>
             </div>
         </nav>
     </header>
+    <!-- Playground -->
     <main class="playground-section" role="main">
         <section class="game-area" aria-label="Game - click the movable button">
-            <div id="target" class="target-button" role="button" tabindex="0" aria-label="Click to score points!">CLICK!</div>
+            <button id="target">CLICK!</button>
         </section>
     </main>
     <footer class="game-footer">
         <p>&copy; Filip Łuka. 2026 Button Clicker Game. All rights reserved.</p>
+        <!-- Footer content -->
     </footer>
         <script src="script.js" defer></script>
 </body>
