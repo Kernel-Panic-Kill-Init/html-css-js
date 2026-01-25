@@ -32,6 +32,7 @@ open index.html
 # or use Live Server extension
 📱 Live Demo
 
+<img width="1869" height="855" alt="Preview" src="https://github.com/user-attachments/assets/7597ca13-693a-4d0e-b62c-cc82439c982b" />
 
 🎯 Planned Features
 Phase 1 - Core Polish
