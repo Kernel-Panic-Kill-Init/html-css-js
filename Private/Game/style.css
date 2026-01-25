@@ -1,5 +1,8 @@
 /*  Fonts   */
 @import url('https://fonts.googleapis.com/css2?family=Share+Tech&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+
+
 /*  COLOR VARIABLES */
 :root {
   --cyber-bg: linear-gradient(45deg, #0a0a0a, #1a1a2e, #16213e);
@@ -18,6 +21,7 @@ body {
   flex-direction: column;
 }
 
+
 /*  HEADER STYLES   */
 .game-header {
   background: rgba(0,0,0,0.9);
@@ -25,11 +29,111 @@ body {
 }
 
 .navbar .stats {
-  display: flex;
+  display: flex !important;
   justify-content: center;
-  gap: 2rem;
+  align-items: center; /* Vert center */
+  gap: 1.5rem; /* Smaller gap */
   padding: 1rem 2rem;
-  font-size: 1.2rem;
+  flex-wrap: nowrap; /* Without wrap */
+  font-size: 1.1rem;
+}
+
+.highscore-btn {
+  background: linear-gradient(45deg, #ff00ff, #00ffff);
+  border: 2px solid transparent;
+  color: #000;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  font-family: 'Orbitron', monospace;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(0,255,255,0.5);
+  transition: all 0.3s;
+  white-space: nowrap;
+}
+
+.highscore-btn:hover {
+  background: var(--neon-green);
+  color: #000;
+  box-shadow: 0 0 20px var(--neon-green);
+  transform: scale(1.05);
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  max-height: 80vh;
+}
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: -10px 0 20px 0; /* Negative margin for h3 */
+  padding-bottom: 15px;
+  border-bottom: 2px solid rgba(0,255,136,0.3);
+}
+
+/* HIGHSCORE LIST */
+#highscore-list {
+  flex: 1;
+  padding: 0;
+  margin: 0;
+  overflow-y: auto;
+  max-height: 400px;
+}
+
+.highscore-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  margin: 8px 0;
+  background: rgba(0,255,136,0.1);
+  border-left: 4px solid var(--neon-green);
+  border-radius: 5px;
+}
+
+.highscore-item.empty {
+  justify-content: center;
+  color: #888;
+  font-style: italic;
+}
+
+#close-highscore {
+  background: linear-gradient(135deg, #ff0080, #00ff88);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-family: 'Orbitron', monospace;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 
+    0 0 15px rgba(255,0,128,0.6),
+    0 5px 15px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+  order: 2; /* Po prawej */
+}
+
+#close-highscore:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 
+    0 0 30px #ff0080,
+    0 0 40px rgba(0,255,136,0.5);
+  background: linear-gradient(135deg, #00ff88, #ff0080);
+}
+
+h3 {
+  margin: 0 !important;
+  font-size: 1.8rem;
+  background: linear-gradient(45deg, #00ffff, #ffff00, #ff00ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: textGlow 2s ease-in-out infinite alternate;
+  order: 1; /* Z lewej */
 }
 
 /*  MAIN PLAYGROUND STYLES   */
@@ -84,3 +188,35 @@ body {
   100% { transform: translate(-50%, -50%) scale(1.15); box-shadow: 0 0 35px rgba(102,0,26,1); }
 }
 
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes textGlow {
+  from { filter: drop-shadow(0 0 5px #00ffff); }
+  to { filter: drop-shadow(0 0 15px #ff00ff); }
+}
+
+
+.highscore-rank { color: #ffff00; font-weight: 900; }
+.highscore-name { color: var(--neon-green); }
+.highscore-score { color: #ff00ff; font-weight: bold; }
+
+
+.highscore-item:nth-child(1) { border-left-color: #ffd700; background: rgba(255,215,0,0.2); }
+.highscore-item:nth-child(2) { border-left-color: #c0c0c0; background: rgba(192,192,192,0.1); }
+.highscore-item:nth-child(3) { border-left-color: #cd7f32; background: rgba(205,127,50,0.1); }
+
+/* Custom scrollbar */
+#highscore-list::-webkit-scrollbar {
+  width: 8px;
+}
+#highscore-list::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.3);
+}
+#highscore-list::-webkit-scrollbar-thumb {
+  background: linear-gradient(#00ff88, #ff0080);
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0,255,136,0.5);
+}

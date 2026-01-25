@@ -26,6 +26,33 @@ let levels = [
     { reqScore: 24, time: 20, speed: 600 }   // Level 5
 ];
 
+class HighscoreManager {
+  static KEY = 'buttonClickerHS';
+  static getScores() {
+    try { return JSON.parse(localStorage.getItem(this.KEY)) || []; }
+    catch { return []; }
+  }
+  static saveScore(name, score) {
+    const scores = this.getScores();
+    scores.push({name, score, date: new Date().toLocaleDateString('pl-PL')});
+    scores.sort((a,b) => b.score - a.score);
+    scores.length = 10;
+    localStorage.setItem(this.KEY, JSON.stringify(scores));
+  }
+  static render() {
+    const list = document.getElementById('highscore-list');
+    const scores = this.getScores();
+    list.innerHTML = scores.length ? 
+      scores.map((s,i) => 
+        `<li class="highscore-item">
+          <span>#${i+1}</span>
+          <span>${s.name}: ${s.score} pkt</span>
+        </li>`
+      ).join('') :
+      '<li class="highscore-item empty">🔥 Be first! 🔥</li>';
+  }
+}
+
 // RANDOM POSITION GENERATOR FOR THE BUTTON
 const moveTarget = () => {
     console.log("DEBUG:", arenaWidth, arenaHeight, target.offsetWidth);  
@@ -43,10 +70,17 @@ const moveTarget = () => {
 
 // GAME FUNCTIONS
 const gameOver = () => {
-    clearInterval(timerId);
-    clearInterval(intervalId);
-    alert("Game Over! Your score: " + score);
+  clearInterval(timerId);
+  clearInterval(intervalId);
+  const finalScore = score;
+  const scores = HighscoreManager.getScores();
+  if (!scores.length || finalScore >= scores[9]?.score || scores.length < 10) {
+    const name = prompt(`🏆 Wynik: ${finalScore}\nImię:`) || 'Guest';
+    HighscoreManager.saveScore(name, finalScore);
+  }
+  alert(`Game Over! Your score: ${finalScore} pkt`);
 };
+
 
 const handleLevelUp = () => {
     if (score >= levels[currentLevel].reqScore && currentLevel < levels.length - 1) {
@@ -119,4 +153,29 @@ target.addEventListener('click', () => {
             canScore = true;
         }, 900);
     }
+});
+
+
+// HIGHSCORE MODAL LOGIC
+document.addEventListener('DOMContentLoaded', () => {
+    //HIGHSCORE RENDER FOR THE FIRST TIME
+    HighscoreManager.render()
+  const modal = document.getElementById('highscore-modal');
+  const btn = document.getElementById('highscore-btn');
+  const closeBtn = document.getElementById('close-highscore');
+
+
+  // Open on click
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    HighscoreManager.render();
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+    console.log('Highscore opened'); // DEBUG
+  });
+
+  // Close button
+   closeBtn.onclick = () => { modal.style.display = 'none'; document.body.style.overflow = ''; };
+  modal.onclick = (e) => { if (e.target === modal) { modal.style.display = 'none'; document.body.style.overflow = ''; } };
+  document.onkeydown = (e) => { if (e.key === 'Escape') { modal.style.display = 'none'; document.body.style.overflow = ''; } };
 });

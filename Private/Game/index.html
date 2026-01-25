@@ -15,24 +15,39 @@
     <header class="game-header">
         <nav class="navbar" role="navigation" aria-label="Game stats">
             <!-- Game stats -->
-            <div class="stats">
-                <span id="score"><b>Score:</b> 0</span>
-                <span id="level"><b>Level:</b> 1</span>
-                <span id="timer"><b>Time:</b> 00:00</span>
-                <span id="player"><b>Player:</b> Guest</span>
-                <span id="lives"><b>Lives:</b> 3</span>
-            </div>
+       <div class="stats">
+    <span id="score"><b>Score:</b> 0</span>
+    <span id="level"><b>Level:</b> 1</span>
+    <span id="timer"><b>Time:</b> 00:00</span>
+    <span id="player"><b>Player:</b> Guest</span>
+    <span id="lives"><b>Lives:</b> 3</span>
+    <button id="highscore-btn" class="highscore-btn">🏆 Highscore</button>
+        </div>
+        
         </nav>
     </header>
+        
     <!-- Playground -->
     <main class="playground-section" role="main">
         <section class="game-area" aria-label="Game - click the movable button">
             <button id="target" class="restart">CLICK!</button>
         </section>
     </main>
+
+    <div id="highscore-modal" class="highscore-modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>🏆 Best Scores</h3>
+            <button id="close-highscore">Close</button>
+        </div>
+        <ul id="highscore-list"></ul>
+    </div>
+</div>
+
+    <!-- Footer content -->
     <footer class="game-footer">
         <p>&copy; Filip Łuka. 2026 Button Clicker Game. All rights reserved.</p>
-        <!-- Footer content -->
+        
     </footer>
    <script src="./script.js" defer></script>
 </body>
