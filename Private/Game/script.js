@@ -1,79 +1,122 @@
-                                                                    // CONSTANT VALUES WITH GAME SETTINGS
+// CONSTANT VALUES WITH GAME SETTINGS
+const arena = document.querySelector('.playground-section');
+const maxWidth = arena.clientWidth;
+const maxHeight = arena.clientHeight;
+const target = document.getElementById('target');
+var arenaWidth = arena.offsetWidth - target.offsetWidth;
+var arenaHeight = arena.offsetHeight - target.offsetHeight;
 
+// GAME STATE VARIABLES
+let score = 0;
+let gameStarted = false;
+let intervalId = null;
+let timerId = null;
+let canScore = true;
+let currentLevel = 0;
+let timeLeft = 30;
+let lives = 3;
+let restart = document.querySelector('.restart');
 
-const arena = document.querySelector('.playground-section');               // The main game area
-const maxWidth = arena.clientWidth; // Get the width of the playground section
-const maxHeight = arena.clientHeight;   // Get the height of the playground section
-const target = document.getElementById('target');                     // The button to be clicked
-var arenaWidth = arena.offsetWidth - target.offsetWidth;  // Width of the arena minus the button width
-var arenaHeight = arena.offsetHeight - target.offsetHeight;   // Height of the arena minus the button height 
+// LEVELS DEFINITION
+let levels = [
+    { reqScore: 12, time: 30, speed: 1000 }, // Level 1
+    { reqScore: 18, time: 30, speed: 900 },  // Level 2
+    { reqScore: 20, time: 25, speed: 800 },  // Level 3
+    { reqScore: 20, time: 22, speed: 700 },  // Level 4
+    { reqScore: 24, time: 20, speed: 600 }   // Level 5
+];
 
-
-                                                                    // RANDOM POSITION GENERATOR FOR THE BUTTON
-
-const randomX = Math.random() * arenaWidth;  // Generate a random X position within the arena
-const randomY = Math.random() * arenaHeight; // Generate a random Y position within the arena
-
-                                                                    // SET THE BUTTON'S POSITION TO THE RANDOM COORDINATES
-
-// target.style.left = randomX + 'px';               // Set the button's left position
-// target.style.top = randomY + 'px';                // Set the button's top position
-console.log("Button position set to: (" + randomX + ", " + randomY + ")"); // Log the button's position for debugging
-
-
-
-
-                                                                    // RANDOMLY POSITION THE BUTTON EVERY 1 SECOND
+// RANDOM POSITION GENERATOR FOR THE BUTTON
 const moveTarget = () => {
-    const randomX = Math.random() * arenaWidth;  // Generate a new random X position
-    const randomY = Math.random() * arenaHeight; // Generate a new random Y position
-    target.style.left = randomX + 'px';               // Update the button's left position
-    target.style.top = randomY + 'px';                // Update the button's top position
-    console.log("Button moved to: (" + randomX + ", " + randomY + ")"); // Log the new button position
+    console.log("DEBUG:", arenaWidth, arenaHeight, target.offsetWidth);  
+    if (arenaWidth <= 0 || arenaHeight <= 0) {  
+        console.error("ARENA TOO SMALL!");  
+        return;  
+    }  
+
+    const randomX = Math.random() * arenaWidth;
+    const randomY = Math.random() * arenaHeight;
+    target.style.left = randomX + 'px';
+    target.style.top = randomY + 'px';
+    console.log("Button moved to: (" + randomX + ", " + randomY + ")");
 };
 
-
-
-                                                                    // ADDING LOGIC FOR GAME
-let score = 0; // Initialize score variable
-let gameStarted = false; // Flag to track if the game has started
-let intervalId = null; // Variable to hold the interval ID
-canScore = true; // Flag to control scoring
-let timeLeft = 30; // Game duration in seconds
-let timerId;
-let canClick = true; // Flag to control clickability
-let restart = document.querySelector('.restart'); // Restart button
-restart.addEventListener('click', () => {
-    location.reload(); // Reload the page to restart the game
-});
-let gameOver = () => {
+// GAME FUNCTIONS
+const gameOver = () => {
     clearInterval(timerId);
     clearInterval(intervalId);
     alert("Game Over! Your score: " + score);
-    
-} // Function to handle game over
+};
 
-
-                                                                    // EVENT LISTENER FOR BUTTON CLICK AND GAME LOOP
-                                                                    
-
-target.addEventListener('click', () => {
-    if (!gameStarted){
-        gameStarted = true;
-        intervalId = setInterval(moveTarget, 1000); // Move the button every second
+const handleLevelUp = () => {
+    if (score >= levels[currentLevel].reqScore && currentLevel < levels.length - 1) {
+        console.log("LEVEL UP!");
+        clearInterval(intervalId);
+        clearInterval(timerId);
         
-        timerId = setInterval(() => { // Variable to hold the timer ID
-        timeLeft--;
-        document.getElementById('time').textContent = `Time: ${timeLeft}`; // Update the time display
-        if (timeLeft === 0) gameOver();
-        }, 1000); // Decrease time every second
+        currentLevel++;
+        score = 0;  // GLOBAL RESET
+        timeLeft = levels[currentLevel].time;
+        
+        // UI UPDATE
+        document.getElementById('score').textContent = `Score: 0`;
+        document.querySelector('#level').textContent = `Level: ${currentLevel + 1}`;
+        document.querySelector('#timer').textContent = `Time: ${timeLeft}`;
+        
+        // RESTART INTERVALS
+        intervalId = setInterval(moveTarget, levels[currentLevel].speed);
+        timerId = setInterval(updateTimer, 1000);
+        
+        alert(`Level Up! Welcome on level ${currentLevel + 1}!`);
     }
-        if (canScore) {
-            canScore = false; // Disable clicking temporarily
-          score++; // Increment score
-          document.getElementById('score').textContent = `Score: ${score}`;
-          setTimeout(() => {
-            canScore = true; }, 900);}     // Re-enable clicking after 500ms
+};
+
+const updateTimer = () => {
+    timeLeft--;
+    document.querySelector('#timer').textContent = `Time: ${timeLeft}`;
+    if (timeLeft <= 0) {
+        clearInterval(timerId);
+        gameOver();
+    }
+};
+
+// START GAME LOGIC - ONLY ON FIRST CLICK
+const startGame = () => {
+    console.log("🚀 Game Started");
+    if (gameStarted) return;
+    
+    gameStarted = true;
+    currentLevel = 0;
+    score = 0;
+    timeLeft = levels[0].time;
+    
+    // UI Reset
+    document.getElementById('score').textContent = `Score: ${score}`;
+    document.querySelector('#level').textContent = `Level: 1`;
+    document.querySelector('#timer').textContent = `Time: ${timeLeft}`;
+    
+    // START MOVEMENT + TIMER
+    moveTarget(); // Pierwsze położenie
+    console.log("Level 1 speed:", levels[0].speed);
+    intervalId = setInterval(moveTarget, levels[0].speed);
+    timerId = setInterval(updateTimer, 1000);
+    console.log("Interval IDs:", intervalId, timerId);
+};
+
+// EVENT LISTENER FOR BUTTON CLICK
+target.addEventListener('click', () => {
+    if (!gameStarted) {
+        startGame();
+        return;
     }
     
-);
+    if (canScore) {
+        canScore = false;
+        score++;
+        document.getElementById('score').textContent = `Score: ${score}`;
+        handleLevelUp(); // Check level up
+        setTimeout(() => {
+            canScore = true;
+        }, 900);
+    }
+});
